@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,11 @@ class BioSeeder extends Seeder
     public function run()
     {
         for ($i = 1 ; $i <= 10 ; $i++) {
+            $user = User::findOrFail($i);
             DB::table('bios')->insert(
                 [
-                    'name' => fake()->name(),
-                    'user_id' => $i,
+                    'name' => $user->name,
+                    'user_id' => $user->id,
                     'phone' => '08' . fake()->randomNumber(9, false),
                     'address' => fake()->streetAddress(),
                     'village' => ucfirst(fake()->word(1)),
