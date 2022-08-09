@@ -19,6 +19,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password'  => Hash::make($request->password)
         ]);
+
         $bio = Bio::where('user_id', '=', $user->id)->first();
         if ($bio == null) {
             $bio = new Bio();
@@ -32,8 +33,6 @@ class AuthController extends Controller
             $bio->phone = $request->phone;
             $bio->save();
         }
-
-
 
         $token = $user->createToken(env('SALT_TOKEN'))->plainTextToken;
         return response([
