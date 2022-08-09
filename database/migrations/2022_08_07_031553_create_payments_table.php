@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreignId('bill_id')->constrained()->restrictOnDelete();
             $table->dateTime('paid_at');
             $table->decimal('amount');
+            $table->decimal('maintenance_fee')->default(0);
+            $table->decimal('transaction_fee')->default(0);
+            $table->decimal('total_amount');
             $table->enum('payment_method', ['va', 'bank_transfer', 'digital_money']);
             $table->string('from_bank_name')->nullable();
             $table->string('from_name')->nullable();

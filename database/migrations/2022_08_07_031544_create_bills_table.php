@@ -21,12 +21,8 @@ return new class extends Migration
             $table->dateTime('date_billed');
             $table->string('number');
             $table->decimal('amount');
-            $table->decimal('first_choice_amount');
-            $table->decimal('second_choice_amount');
-            $table->decimal('third_choice_amount');
-            $table->decimal('fourth_choice_amount');
             $table->decimal('maintenance_fee')->default(0);
-            $table->decimal('transaction_fee');
+            $table->decimal('transaction_fee')->default(0);
             $table->string('behalf')->nullable();
             $table->enum('payment_method', ['va', 'bank_transfer', 'digital_money']);
             $table->foreignId('bank_id')->nullable()->constrained()->restrictOnDelete();

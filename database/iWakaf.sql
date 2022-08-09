@@ -184,12 +184,8 @@ CREATE TABLE `bills` (
   `date_billed` datetime NOT NULL,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(8,2) NOT NULL,
-  `first_choice_amount` decimal(8,2) NOT NULL,
-  `second_choice_amount` decimal(8,2) NOT NULL,
-  `third_choice_amount` decimal(8,2) NOT NULL,
-  `fourth_choice_amount` decimal(8,2) NOT NULL,
   `maintenance_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `transaction_fee` decimal(8,2) NOT NULL,
+  `transaction_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
   `behalf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_method` enum('va','bank_transfer','digital_money') COLLATE utf8mb4_unicode_ci NOT NULL,
   `bank_id` bigint unsigned DEFAULT NULL,
@@ -250,7 +246,7 @@ CREATE TABLE `bios` (
   PRIMARY KEY (`id`),
   KEY `bios_user_id_foreign` (`user_id`),
   CONSTRAINT `bios_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +255,7 @@ CREATE TABLE `bios` (
 
 LOCK TABLES `bios` WRITE;
 /*!40000 ALTER TABLE `bios` DISABLE KEYS */;
-INSERT INTO `bios` VALUES (1,1,'Emil Kuswoyo','08782809108','Jr. Baiduri No. 33','Omnis','Nihil','Tegal','Kalimantan Timur','41318','https://placekitten.com/300/300','wakif',NULL,NULL),(2,2,'Putri Mulyani','08842311883','Jr. Abdullah No. 261','Aut','Qui','Sungai Penuh','Kalimantan Utara','67260','https://placekitten.com/300/300','wakif',NULL,NULL),(3,3,'Gabriella Permata','08398254646','Jr. Bahagia  No. 201','Quo','Sit','Pematangsiantar','Sumatera Selatan','78037','https://placekitten.com/300/300','wakif',NULL,NULL),(4,4,'Prabawa Budiman','08487664816','Psr. Antapani Lama No. 760','Ipsa','Voluptas','Surakarta','Kalimantan Tengah','94142','https://placekitten.com/300/300','wakif',NULL,NULL),(5,5,'Alika Nadia Agustina S.Gz','0812894888','Dk. Babadak No. 484','Dolores','Perferendis','Cilegon','Kalimantan Timur','15234','https://placekitten.com/300/300','wakif',NULL,NULL),(6,6,'Elon Garda Sinaga S.E.I','08582524174','Kpg. Kalimantan No. 344','Corrupti','At','Bekasi','DI Yogyakarta','19653','https://placekitten.com/300/300','wakif',NULL,NULL),(7,7,'Kamidin Nugroho','08876788228','Gg. Otto No. 244','Aut','Quisquam','Lhokseumawe','Nusa Tenggara Barat','17039','https://placekitten.com/300/300','wakif',NULL,NULL),(8,8,'Usman Damanik','08615923041','Kpg. Setiabudhi No. 870','Dolores','Voluptatem','Pematangsiantar','Jawa Barat','88772','https://placekitten.com/300/300','wakif',NULL,NULL),(9,9,'Balapati Wahyudin','08754907360','Psr. Gardujati No. 947','Id','Est','Batu','Sulawesi Barat','47756','https://placekitten.com/300/300','wakif',NULL,NULL),(10,10,'Sabar Setiawan','08974404737','Psr. Sutarjo No. 211','Qui','Nam','Pariaman','Gorontalo','47292','https://placekitten.com/300/300','wakif',NULL,NULL),(11,11,'Muhammad Hamid Alwi','081328921421',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'wakif','2022-08-09 07:24:39','2022-08-09 07:24:39');
+INSERT INTO `bios` VALUES (1,1,'Zizi Astuti M.M.','08393798488','Ki. Peta No. 62','Dignissimos','In','Padang','Jawa Timur','17198','https://placekitten.com/300/300','wakif',NULL,NULL),(2,2,'Widya Oliva Novitasari','08960967584','Ki. Bakit  No. 683','Iste','Sunt','Solok','Papua','80198','https://placekitten.com/300/300','wakif',NULL,NULL),(3,3,'Sabrina Winarsih','08578318382','Kpg. R.E. Martadinata No. 115','Minus','Placeat','Bau-Bau','Sulawesi Barat','11908','https://placekitten.com/300/300','wakif',NULL,NULL),(4,4,'Cahyanto Gunarto','08724531556','Ds. Antapani Lama No. 549','Dolores','Quia','Gorontalo','Maluku Utara','63146','https://placekitten.com/300/300','wakif',NULL,NULL),(5,5,'Danuja Saefullah','08406065083','Psr. Zamrud No. 292','Nisi','Possimus','Ternate','Jambi','22753','https://placekitten.com/300/300','wakif',NULL,NULL),(6,6,'Sarah Nuraini','08769644647','Gg. Samanhudi No. 338','Commodi','Sed','Blitar','Maluku','34041','https://placekitten.com/300/300','wakif',NULL,NULL),(7,7,'Aisyah Yulianti','08781465664','Dk. Otto No. 84','Eligendi','Omnis','Administrasi Jakarta Pusat','Sulawesi Barat','70269','https://placekitten.com/300/300','wakif',NULL,NULL),(8,8,'Asirwada Marsudi Pradipta M.M.','08209276411','Gg. Adisucipto No. 698','Ex','Tempore','Batu','Lampung','37637','https://placekitten.com/300/300','wakif',NULL,NULL),(9,9,'Olga Paiman Maryadi S.E.I','08740652463','Jln. Yos Sudarso No. 312','Id','Ducimus','Lubuklinggau','Banten','30010','https://placekitten.com/300/300','wakif',NULL,NULL),(10,10,'Kemba Marpaung','08554984680','Gg. Baja No. 642','Veritatis','Quasi','Tegal','Kalimantan Timur','69325','https://placekitten.com/300/300','wakif',NULL,NULL);
 /*!40000 ALTER TABLE `bios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +481,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=298 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,7 +490,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (271,'2014_10_12_000000_create_users_table',1),(272,'2014_10_12_100000_create_password_resets_table',1),(273,'2019_08_19_000000_create_failed_jobs_table',1),(274,'2019_12_14_000001_create_personal_access_tokens_table',1),(275,'2022_08_07_031420_create_bios_table',1),(276,'2022_08_07_031434_create_categories_table',1),(277,'2022_08_07_031505_create_projects_table',1),(278,'2022_08_07_031516_create_stories_table',1),(279,'2022_08_07_031534_create_updates_table',1),(280,'2022_08_07_031536_create_banks_table',1),(281,'2022_08_07_031538_create_digital_money_table',1),(282,'2022_08_07_031543_create_vas_table',1),(283,'2022_08_07_031544_create_bills_table',1),(284,'2022_08_07_031553_create_payments_table',1),(285,'2022_08_07_031604_create_testimonials_table',1),(286,'2022_08_07_031614_create_blogs_table',1),(287,'2022_08_07_031633_create_project_comments_table',1),(288,'2022_08_07_031700_create_blog_comments_table',1),(289,'2022_08_07_031703_create_tags_table',1),(290,'2022_08_07_031729_create_project_tags_table',1),(291,'2022_08_07_031752_create_blog_tags_table',1),(292,'2022_08_07_031759_create_blog_categories_table',1),(293,'2022_08_07_062710_create_virtual_accounts_table',1),(294,'2022_08_07_064359_create_articles_table',1),(295,'2022_08_07_064365_create_article_comments_table',1),(296,'2022_08_07_064365_create_article_tags_table',1),(297,'2022_08_07_064370_create_article_categories_table',1);
+INSERT INTO `migrations` VALUES (298,'2014_10_12_000000_create_users_table',1),(299,'2014_10_12_100000_create_password_resets_table',1),(300,'2019_08_19_000000_create_failed_jobs_table',1),(301,'2019_12_14_000001_create_personal_access_tokens_table',1),(302,'2022_08_07_031420_create_bios_table',1),(303,'2022_08_07_031434_create_categories_table',1),(304,'2022_08_07_031505_create_projects_table',1),(305,'2022_08_07_031516_create_stories_table',1),(306,'2022_08_07_031534_create_updates_table',1),(307,'2022_08_07_031536_create_banks_table',1),(308,'2022_08_07_031538_create_digital_money_table',1),(309,'2022_08_07_031543_create_vas_table',1),(310,'2022_08_07_031544_create_bills_table',1),(311,'2022_08_07_031553_create_payments_table',1),(312,'2022_08_07_031604_create_testimonials_table',1),(313,'2022_08_07_031614_create_blogs_table',1),(314,'2022_08_07_031633_create_project_comments_table',1),(315,'2022_08_07_031700_create_blog_comments_table',1),(316,'2022_08_07_031703_create_tags_table',1),(317,'2022_08_07_031729_create_project_tags_table',1),(318,'2022_08_07_031752_create_blog_tags_table',1),(319,'2022_08_07_031759_create_blog_categories_table',1),(320,'2022_08_07_062710_create_virtual_accounts_table',1),(321,'2022_08_07_064359_create_articles_table',1),(322,'2022_08_07_064365_create_article_comments_table',1),(323,'2022_08_07_064365_create_article_tags_table',1),(324,'2022_08_07_064370_create_article_categories_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,6 +531,9 @@ CREATE TABLE `payments` (
   `bill_id` bigint unsigned NOT NULL,
   `paid_at` datetime NOT NULL,
   `amount` decimal(8,2) NOT NULL,
+  `maintenance_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `transaction_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `total_amount` decimal(8,2) NOT NULL,
   `payment_method` enum('va','bank_transfer','digital_money') COLLATE utf8mb4_unicode_ci NOT NULL,
   `from_bank_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -581,7 +580,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +589,6 @@ CREATE TABLE `personal_access_tokens` (
 
 LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
-INSERT INTO `personal_access_tokens` VALUES (2,'App\\Models\\User',1,'iwakafisalam','dc5a26423f9ee7bd8e9a233efb0c5aa1f5e97fbfaf443263991a614e4c510e59','[\"*\"]','2022-08-09 07:47:23',NULL,'2022-08-09 07:43:55','2022-08-09 07:47:23');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -676,6 +674,11 @@ CREATE TABLE `projects` (
   `picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `featured_picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
+  `first_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `second_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `third_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `fourth_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `maintenance_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
   `is_favourite` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -823,7 +826,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -832,7 +835,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Emil Kuswoyo','mumpuni62@example.org','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','spHMB1OKEg','2022-08-09 07:24:14','2022-08-09 07:24:14'),(2,'Putri Mulyani','luwes.maheswara@example.com','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','iTLE3BIoX8','2022-08-09 07:24:14','2022-08-09 07:24:14'),(3,'Gabriella Permata','bella48@example.net','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','A62wpQENQ9','2022-08-09 07:24:14','2022-08-09 07:24:14'),(4,'Prabawa Budiman','qlestari@example.com','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','k4UBICMOVS','2022-08-09 07:24:14','2022-08-09 07:24:14'),(5,'Alika Nadia Agustina S.Gz','dwijaya@example.net','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','yBUJrqdryg','2022-08-09 07:24:14','2022-08-09 07:24:14'),(6,'Elon Garda Sinaga S.E.I','oman08@example.net','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','f4CwkBwjTt','2022-08-09 07:24:14','2022-08-09 07:24:14'),(7,'Kamidin Nugroho','raina01@example.com','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','W65JWWPBEB','2022-08-09 07:24:14','2022-08-09 07:24:14'),(8,'Usman Damanik','salwa25@example.org','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','pWE6HzVTvI','2022-08-09 07:24:14','2022-08-09 07:24:14'),(9,'Balapati Wahyudin','pranawa.mulyani@example.net','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','srxHCqep2R','2022-08-09 07:24:14','2022-08-09 07:24:14'),(10,'Sabar Setiawan','limar.nasyidah@example.org','2022-08-09 07:24:14','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','WhVHQbwEWx','2022-08-09 07:24:14','2022-08-09 07:24:14'),(11,'Muhammad Hamid Alwi','dheasetia@gmail.com',NULL,'$2y$10$Toae1qcLWsdl80uTgX0Ueum3QFR/Pnh9QfrZitF9ZV4zLRRX1E86q',NULL,'2022-08-09 07:24:39','2022-08-09 07:24:39');
+INSERT INTO `users` VALUES (1,'Zizi Astuti M.M.','astuti.nrima@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sTY0dlxiTm','2022-08-09 11:42:32','2022-08-09 11:42:32'),(2,'Widya Oliva Novitasari','hari.prayoga@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','O4FMw8KjWy','2022-08-09 11:42:32','2022-08-09 11:42:32'),(3,'Sabrina Winarsih','imaryati@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','fU4MQ3vBXb','2022-08-09 11:42:32','2022-08-09 11:42:32'),(4,'Cahyanto Gunarto','asmianto.hasanah@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','B9Zn3YaGIp','2022-08-09 11:42:32','2022-08-09 11:42:32'),(5,'Danuja Saefullah','tira44@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','SV12zbdYS1','2022-08-09 11:42:32','2022-08-09 11:42:32'),(6,'Sarah Nuraini','mmustofa@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','bqJUwoFIGd','2022-08-09 11:42:32','2022-08-09 11:42:32'),(7,'Aisyah Yulianti','belinda53@example.com','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','1KlqBarAcU','2022-08-09 11:42:32','2022-08-09 11:42:32'),(8,'Asirwada Marsudi Pradipta M.M.','kusumo.maimunah@example.com','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','weBIJi6x83','2022-08-09 11:42:32','2022-08-09 11:42:32'),(9,'Olga Paiman Maryadi S.E.I','bagiya.mangunsong@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','xvLI2MbZBi','2022-08-09 11:42:32','2022-08-09 11:42:32'),(10,'Kemba Marpaung','liman76@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XKGK2NUFh4','2022-08-09 11:42:32','2022-08-09 11:42:32');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -897,4 +900,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-09 14:57:43
+-- Dump completed on 2022-08-09 18:48:06
