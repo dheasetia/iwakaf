@@ -18,24 +18,30 @@ return new class extends Migration
             $table->string('order_id');
             $table->foreignId('project_id')->constrained()->restrictOnDelete();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
-            $table->dateTime('date_billed');
+            $table->string('duitku_reference_number')->nullable();
+            $table->dateTime('date_billed')->nullable();
+            $table->string('email');
             $table->string('number');
-            $table->decimal('amount');
+            $table->decimal('payment_amount');
             $table->decimal('maintenance_fee')->default(0);
-            $table->decimal('transaction_fee')->default(0);
+            $table->decimal('payment_fee')->default(0);
             $table->string('behalf')->nullable();
-            $table->enum('payment_method', ['va', 'bank_transfer', 'digital_money']);
-            $table->foreignId('bank_id')->nullable()->constrained()->restrictOnDelete();
-            $table->foreignId('va_id')->nullable()->constrained()->restrictOnDelete();
-            $table->unsignedBigInteger('digital_money_id')->nullable();
+            $table->string('payment_method', 2);
             $table->text('comment')->nullable();
             $table->tinyInteger('is_anonymous')->default(0);
             $table->string('status')->default('pending');
-            $table->string('va_number')->nullable();
-            $table->dateTime('expired_at')->nullable();
+
+            $table->string('merchant_code')->nullable();
+            $table->string('merchant_order_id')->nullable();
+            $table->string('product_details')->nullable();
+            $table->string('merchant_user_info')->nullable();
+            $table->string('customer_va_name')->nullable();
+            $table->string('customer_phone_number')->nullable();
+            $table->string('return_url')->nullable();
+            $table->string('callback_url')->nullable();
+            $table->integer('expiry_period')->nullable()->comment('in minutes');
             $table->timestamps();
 
-            $table->foreign('digital_money_id')->references('id')->on('digital_money');
         });
     }
 

@@ -145,31 +145,6 @@ LOCK TABLES `articles` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `banks`
---
-
-DROP TABLE IF EXISTS `banks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `banks` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `bank` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `banks`
---
-
-LOCK TABLES `banks` WRITE;
-/*!40000 ALTER TABLE `banks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `banks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `bills`
 --
 
@@ -181,34 +156,34 @@ CREATE TABLE `bills` (
   `order_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project_id` bigint unsigned NOT NULL,
   `user_id` bigint unsigned NOT NULL,
-  `date_billed` datetime NOT NULL,
+  `duitku_reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_billed` datetime DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` decimal(8,2) NOT NULL,
+  `payment_amount` decimal(8,2) NOT NULL,
   `maintenance_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `transaction_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `payment_fee` decimal(8,2) NOT NULL DEFAULT '0.00',
   `behalf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_method` enum('va','bank_transfer','digital_money') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bank_id` bigint unsigned DEFAULT NULL,
-  `va_id` bigint unsigned DEFAULT NULL,
-  `digital_money_id` bigint unsigned DEFAULT NULL,
+  `payment_method` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci,
   `is_anonymous` tinyint NOT NULL DEFAULT '0',
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `va_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `expired_at` datetime DEFAULT NULL,
+  `merchant_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `merchant_order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_details` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `merchant_user_info` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_va_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_phone_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `return_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `callback_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expiry_period` int DEFAULT NULL COMMENT 'in minutes',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `bills_project_id_foreign` (`project_id`),
   KEY `bills_user_id_foreign` (`user_id`),
-  KEY `bills_bank_id_foreign` (`bank_id`),
-  KEY `bills_va_id_foreign` (`va_id`),
-  KEY `bills_digital_money_id_foreign` (`digital_money_id`),
-  CONSTRAINT `bills_bank_id_foreign` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `bills_digital_money_id_foreign` FOREIGN KEY (`digital_money_id`) REFERENCES `digital_money` (`id`),
   CONSTRAINT `bills_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `bills_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `bills_va_id_foreign` FOREIGN KEY (`va_id`) REFERENCES `vas` (`id`) ON DELETE RESTRICT
+  CONSTRAINT `bills_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -231,8 +206,9 @@ DROP TABLE IF EXISTS `bios`;
 CREATE TABLE `bios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `village` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `district` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -255,7 +231,7 @@ CREATE TABLE `bios` (
 
 LOCK TABLES `bios` WRITE;
 /*!40000 ALTER TABLE `bios` DISABLE KEYS */;
-INSERT INTO `bios` VALUES (1,1,'Zizi Astuti M.M.','08393798488','Ki. Peta No. 62','Dignissimos','In','Padang','Jawa Timur','17198','https://placekitten.com/300/300','wakif',NULL,NULL),(2,2,'Widya Oliva Novitasari','08960967584','Ki. Bakit  No. 683','Iste','Sunt','Solok','Papua','80198','https://placekitten.com/300/300','wakif',NULL,NULL),(3,3,'Sabrina Winarsih','08578318382','Kpg. R.E. Martadinata No. 115','Minus','Placeat','Bau-Bau','Sulawesi Barat','11908','https://placekitten.com/300/300','wakif',NULL,NULL),(4,4,'Cahyanto Gunarto','08724531556','Ds. Antapani Lama No. 549','Dolores','Quia','Gorontalo','Maluku Utara','63146','https://placekitten.com/300/300','wakif',NULL,NULL),(5,5,'Danuja Saefullah','08406065083','Psr. Zamrud No. 292','Nisi','Possimus','Ternate','Jambi','22753','https://placekitten.com/300/300','wakif',NULL,NULL),(6,6,'Sarah Nuraini','08769644647','Gg. Samanhudi No. 338','Commodi','Sed','Blitar','Maluku','34041','https://placekitten.com/300/300','wakif',NULL,NULL),(7,7,'Aisyah Yulianti','08781465664','Dk. Otto No. 84','Eligendi','Omnis','Administrasi Jakarta Pusat','Sulawesi Barat','70269','https://placekitten.com/300/300','wakif',NULL,NULL),(8,8,'Asirwada Marsudi Pradipta M.M.','08209276411','Gg. Adisucipto No. 698','Ex','Tempore','Batu','Lampung','37637','https://placekitten.com/300/300','wakif',NULL,NULL),(9,9,'Olga Paiman Maryadi S.E.I','08740652463','Jln. Yos Sudarso No. 312','Id','Ducimus','Lubuklinggau','Banten','30010','https://placekitten.com/300/300','wakif',NULL,NULL),(10,10,'Kemba Marpaung','08554984680','Gg. Baja No. 642','Veritatis','Quasi','Tegal','Kalimantan Timur','69325','https://placekitten.com/300/300','wakif',NULL,NULL);
+INSERT INTO `bios` VALUES (1,1,'Cinta','Waskita','08703348334','Kpg. Sunaryo No. 608','Dolorem','Molestiae','Medan','Kalimantan Timur','78994','https://placekitten.com/300/300','wakif',NULL,NULL),(2,2,'Keisha','Putra','08178926337','Dk. Halim No. 280','Porro','Ipsam','Tangerang Selatan','Nusa Tenggara Barat','25532','https://placekitten.com/300/300','wakif',NULL,NULL),(3,3,'Dacin','Lailasari','08259125062','Jr. Salam No. 353','Et','Rerum','Malang','Nusa Tenggara Timur','18772','https://placekitten.com/300/300','wakif',NULL,NULL),(4,4,'Manah','Maulana','08646904524','Psr. Bahagia  No. 202','Enim','Consequatur','Sukabumi','Kepulauan Bangka Belitung','12409','https://placekitten.com/300/300','wakif',NULL,NULL),(5,5,'Karen','Andriani','0853188250','Jr. Gajah No. 464','Cupiditate','Totam','Cirebon','Riau','91875','https://placekitten.com/300/300','wakif',NULL,NULL),(6,6,'Iriana','Hartati','08749575919','Jln. Ters. Kiaracondong No. 770','Repellat','Perferendis','Padangpanjang','Jawa Barat','79705','https://placekitten.com/300/300','wakif',NULL,NULL),(7,7,'Leo','Hasanah','08531730336','Ds. Cikutra Timur No. 967','Maxime','Neque','Jambi','Sumatera Barat','55819','https://placekitten.com/300/300','wakif',NULL,NULL),(8,8,'Irma','Marpaung','08104666100','Ki. Dipenogoro No. 84','Harum','Doloremque','Denpasar','Banten','45199','https://placekitten.com/300/300','wakif',NULL,NULL),(9,9,'Eka','Mardhiyah','08770028404','Ds. Bara Tambar No. 433','Voluptatem','Est','Gorontalo','Kepulauan Riau','45834','https://placekitten.com/300/300','wakif',NULL,NULL),(10,10,'Azalea','Pranowo','08105891654','Psr. Abdul Muis No. 257','Nam','Eum','Bau-Bau','Nusa Tenggara Barat','55050','https://placekitten.com/300/300','wakif',NULL,NULL);
 /*!40000 ALTER TABLE `bios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -415,32 +391,6 @@ LOCK TABLES `categories` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `digital_money`
---
-
-DROP TABLE IF EXISTS `digital_money`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `digital_money` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `digital_money`
---
-
-LOCK TABLES `digital_money` WRITE;
-/*!40000 ALTER TABLE `digital_money` DISABLE KEYS */;
-/*!40000 ALTER TABLE `digital_money` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `failed_jobs`
 --
 
@@ -470,6 +420,36 @@ LOCK TABLES `failed_jobs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `favourite_project`
+--
+
+DROP TABLE IF EXISTS `favourite_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `favourite_project` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` bigint unsigned NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `favourite_project_project_id_foreign` (`project_id`),
+  KEY `favourite_project_user_id_foreign` (`user_id`),
+  CONSTRAINT `favourite_project_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `favourite_project_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `favourite_project`
+--
+
+LOCK TABLES `favourite_project` WRITE;
+/*!40000 ALTER TABLE `favourite_project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `favourite_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -481,7 +461,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +470,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (298,'2014_10_12_000000_create_users_table',1),(299,'2014_10_12_100000_create_password_resets_table',1),(300,'2019_08_19_000000_create_failed_jobs_table',1),(301,'2019_12_14_000001_create_personal_access_tokens_table',1),(302,'2022_08_07_031420_create_bios_table',1),(303,'2022_08_07_031434_create_categories_table',1),(304,'2022_08_07_031505_create_projects_table',1),(305,'2022_08_07_031516_create_stories_table',1),(306,'2022_08_07_031534_create_updates_table',1),(307,'2022_08_07_031536_create_banks_table',1),(308,'2022_08_07_031538_create_digital_money_table',1),(309,'2022_08_07_031543_create_vas_table',1),(310,'2022_08_07_031544_create_bills_table',1),(311,'2022_08_07_031553_create_payments_table',1),(312,'2022_08_07_031604_create_testimonials_table',1),(313,'2022_08_07_031614_create_blogs_table',1),(314,'2022_08_07_031633_create_project_comments_table',1),(315,'2022_08_07_031700_create_blog_comments_table',1),(316,'2022_08_07_031703_create_tags_table',1),(317,'2022_08_07_031729_create_project_tags_table',1),(318,'2022_08_07_031752_create_blog_tags_table',1),(319,'2022_08_07_031759_create_blog_categories_table',1),(320,'2022_08_07_062710_create_virtual_accounts_table',1),(321,'2022_08_07_064359_create_articles_table',1),(322,'2022_08_07_064365_create_article_comments_table',1),(323,'2022_08_07_064365_create_article_tags_table',1),(324,'2022_08_07_064370_create_article_categories_table',1);
+INSERT INTO `migrations` VALUES (597,'2014_10_12_000000_create_users_table',1),(598,'2014_10_12_100000_create_password_resets_table',1),(599,'2019_08_19_000000_create_failed_jobs_table',1),(600,'2019_12_14_000001_create_personal_access_tokens_table',1),(601,'2022_08_07_031420_create_bios_table',1),(602,'2022_08_07_031434_create_categories_table',1),(603,'2022_08_07_031505_create_projects_table',1),(604,'2022_08_07_031516_create_stories_table',1),(605,'2022_08_07_031534_create_updates_table',1),(606,'2022_08_07_031544_create_bills_table',1),(607,'2022_08_07_031553_create_payments_table',1),(608,'2022_08_07_031604_create_testimonials_table',1),(609,'2022_08_07_031614_create_blogs_table',1),(610,'2022_08_07_031633_create_project_comments_table',1),(611,'2022_08_07_031700_create_blog_comments_table',1),(612,'2022_08_07_031703_create_tags_table',1),(613,'2022_08_07_031729_create_project_tags_table',1),(614,'2022_08_07_031752_create_blog_tags_table',1),(615,'2022_08_07_031759_create_blog_categories_table',1),(616,'2022_08_07_062710_create_virtual_accounts_table',1),(617,'2022_08_07_064359_create_articles_table',1),(618,'2022_08_07_064365_create_article_comments_table',1),(619,'2022_08_07_064365_create_article_tags_table',1),(620,'2022_08_07_064370_create_article_categories_table',1),(621,'2022_08_10_155703_create_favourite_project_table',1),(622,'2022_08_10_155934_create_wishlist_project_table',1),(623,'2022_08_10_160721_create_payment_method_types_table',1),(624,'2022_08_10_160728_create_payment_methods_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,6 +499,67 @@ LOCK TABLES `password_resets` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `payment_method_types`
+--
+
+DROP TABLE IF EXISTS `payment_method_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment_method_types` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `payment_method_types_type_unique` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment_method_types`
+--
+
+LOCK TABLES `payment_method_types` WRITE;
+/*!40000 ALTER TABLE `payment_method_types` DISABLE KEYS */;
+INSERT INTO `payment_method_types` VALUES (1,'Credit Card',NULL,NULL),(2,'Virtual Account',NULL,NULL),(3,'Ritel',NULL,NULL),(4,'E-Wallet',NULL,NULL),(5,'QRIS',NULL,NULL),(6,'Kredit',NULL,NULL);
+/*!40000 ALTER TABLE `payment_method_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment_methods`
+--
+
+DROP TABLE IF EXISTS `payment_methods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment_methods` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `payment_method_id` bigint unsigned NOT NULL,
+  `code` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_shown` tinyint NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `payment_methods_code_unique` (`code`),
+  UNIQUE KEY `payment_methods_display_text_unique` (`display_text`),
+  KEY `payment_methods_payment_method_id_foreign` (`payment_method_id`),
+  CONSTRAINT `payment_methods_payment_method_id_foreign` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment_methods`
+--
+
+LOCK TABLES `payment_methods` WRITE;
+/*!40000 ALTER TABLE `payment_methods` DISABLE KEYS */;
+INSERT INTO `payment_methods` VALUES (1,1,'VC','(Visa / Master Card / JCB)',NULL,1,NULL,NULL),(2,2,'BC','BCA Virtual Account',NULL,1,NULL,NULL),(3,2,'M2','Mandiri Virtual Account',NULL,1,NULL,NULL),(4,2,'VA','Maybank Virtual Account',NULL,0,NULL,NULL),(5,2,'I1','BNI Virtual Account',NULL,1,NULL,NULL),(6,2,'B1','CIMB Niaga Virtual Account',NULL,1,NULL,NULL),(7,2,'BT','Permata Bank Virtual Account',NULL,1,NULL,NULL),(8,2,'A1','ATM Bersama',NULL,1,NULL,NULL),(9,2,'AG','Bank Artha Graha',NULL,1,NULL,NULL),(10,2,'NC','Bank Neo Commerce/BNC',NULL,0,NULL,NULL),(11,2,'BR','BRIVA',NULL,1,NULL,NULL),(12,2,'S1','Bank Sahabat Sampoerna',NULL,0,NULL,NULL),(13,3,'FT','Pegadaian/ALFA/Pos',NULL,1,NULL,NULL),(14,3,'A2','POS Indonesia',NULL,1,NULL,NULL),(15,3,'IR','Indomaret',NULL,1,NULL,NULL),(16,4,'OV','OVO',NULL,0,NULL,NULL),(17,4,'SA','Shopee Pay Apps',NULL,0,NULL,NULL),(18,4,'LF','LinkAja Apps (Fixed Fee)',NULL,0,NULL,NULL),(19,4,'LA','LinkAja Apps (Percentage Fee)',NULL,0,NULL,NULL),(20,4,'DA','DANA',NULL,0,NULL,NULL),(21,4,'SL','Shopee Pay Account Link',NULL,0,NULL,NULL),(22,4,'OL','OVO Account Link',NULL,0,NULL,NULL),(23,5,'SP','Shopee Pay',NULL,0,NULL,NULL),(24,5,'LQ','LinkAja',NULL,0,NULL,NULL),(25,5,'NQ','Nobu',NULL,0,NULL,NULL),(26,6,'DN','Indodana Paylater',NULL,0,NULL,NULL);
+/*!40000 ALTER TABLE `payment_methods` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `payments`
 --
 
@@ -527,6 +568,7 @@ DROP TABLE IF EXISTS `payments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
   `project_id` bigint unsigned NOT NULL,
   `bill_id` bigint unsigned NOT NULL,
   `paid_at` datetime NOT NULL,
@@ -543,10 +585,12 @@ CREATE TABLE `payments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `payments_user_id_foreign` (`user_id`),
   KEY `payments_project_id_foreign` (`project_id`),
   KEY `payments_bill_id_foreign` (`bill_id`),
   CONSTRAINT `payments_bill_id_foreign` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `payments_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE RESTRICT
+  CONSTRAINT `payments_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `payments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -673,7 +717,7 @@ CREATE TABLE `projects` (
   `facebook_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `featured_picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `caption` text COLLATE utf8mb4_unicode_ci,
   `first_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
   `second_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
   `third_choice_amount` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -817,7 +861,8 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -835,33 +880,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Zizi Astuti M.M.','astuti.nrima@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sTY0dlxiTm','2022-08-09 11:42:32','2022-08-09 11:42:32'),(2,'Widya Oliva Novitasari','hari.prayoga@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','O4FMw8KjWy','2022-08-09 11:42:32','2022-08-09 11:42:32'),(3,'Sabrina Winarsih','imaryati@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','fU4MQ3vBXb','2022-08-09 11:42:32','2022-08-09 11:42:32'),(4,'Cahyanto Gunarto','asmianto.hasanah@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','B9Zn3YaGIp','2022-08-09 11:42:32','2022-08-09 11:42:32'),(5,'Danuja Saefullah','tira44@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','SV12zbdYS1','2022-08-09 11:42:32','2022-08-09 11:42:32'),(6,'Sarah Nuraini','mmustofa@example.org','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','bqJUwoFIGd','2022-08-09 11:42:32','2022-08-09 11:42:32'),(7,'Aisyah Yulianti','belinda53@example.com','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','1KlqBarAcU','2022-08-09 11:42:32','2022-08-09 11:42:32'),(8,'Asirwada Marsudi Pradipta M.M.','kusumo.maimunah@example.com','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','weBIJi6x83','2022-08-09 11:42:32','2022-08-09 11:42:32'),(9,'Olga Paiman Maryadi S.E.I','bagiya.mangunsong@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','xvLI2MbZBi','2022-08-09 11:42:32','2022-08-09 11:42:32'),(10,'Kemba Marpaung','liman76@example.net','2022-08-09 11:42:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XKGK2NUFh4','2022-08-09 11:42:32','2022-08-09 11:42:32');
+INSERT INTO `users` VALUES (1,'Cinta','Waskita','yuliana02@example.net','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','zw7xIanoeC','2022-08-10 12:38:27','2022-08-10 12:38:27'),(2,'Keisha','Putra','prabowo.yulia@example.net','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','vfVEjFQ5oH','2022-08-10 12:38:27','2022-08-10 12:38:27'),(3,'Dacin','Lailasari','kurniawan.ratna@example.com','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','VIpyPrBd7Q','2022-08-10 12:38:27','2022-08-10 12:38:27'),(4,'Manah','Maulana','mansur.rahmi@example.com','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','Gm9DKPLFAH','2022-08-10 12:38:27','2022-08-10 12:38:27'),(5,'Karen','Andriani','niyaga21@example.com','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','0nFomtMmwR','2022-08-10 12:38:27','2022-08-10 12:38:27'),(6,'Iriana','Hartati','melani.perkasa@example.org','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','B2IsINdS5b','2022-08-10 12:38:27','2022-08-10 12:38:27'),(7,'Leo','Hasanah','mprabowo@example.com','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','GVCiZJ1v0U','2022-08-10 12:38:27','2022-08-10 12:38:27'),(8,'Irma','Marpaung','pangestu.zelda@example.org','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','bE6tfrLQBp','2022-08-10 12:38:27','2022-08-10 12:38:27'),(9,'Eka','Mardhiyah','ika18@example.com','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','PkG4d5ImUP','2022-08-10 12:38:27','2022-08-10 12:38:27'),(10,'Azalea','Pranowo','devi13@example.net','2022-08-10 12:38:27','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','xzPngXiJi7','2022-08-10 12:38:27','2022-08-10 12:38:27');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `vas`
---
-
-DROP TABLE IF EXISTS `vas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vas` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `va` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `vas`
---
-
-LOCK TABLES `vas` WRITE;
-/*!40000 ALTER TABLE `vas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -890,6 +910,36 @@ LOCK TABLES `virtual_accounts` WRITE;
 /*!40000 ALTER TABLE `virtual_accounts` DISABLE KEYS */;
 /*!40000 ALTER TABLE `virtual_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `wishlist_project`
+--
+
+DROP TABLE IF EXISTS `wishlist_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wishlist_project` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` bigint unsigned NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `wishlist_project_project_id_foreign` (`project_id`),
+  KEY `wishlist_project_user_id_foreign` (`user_id`),
+  CONSTRAINT `wishlist_project_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `wishlist_project_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wishlist_project`
+--
+
+LOCK TABLES `wishlist_project` WRITE;
+/*!40000 ALTER TABLE `wishlist_project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wishlist_project` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -900,4 +950,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-09 18:48:06
+-- Dump completed on 2022-08-10 19:40:10

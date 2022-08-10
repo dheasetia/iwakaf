@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->restrictOnUpdate();
             $table->foreignId('project_id')->constrained()->restrictOnDelete();
             $table->foreignId('bill_id')->constrained()->restrictOnDelete();
             $table->dateTime('paid_at');

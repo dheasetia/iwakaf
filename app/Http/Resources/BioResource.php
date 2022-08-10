@@ -15,7 +15,7 @@ class BioResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'  => $this->name,
+            'name'  => $this->first_name,
             'phone' => $this->phone
         ];
     }

@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vas', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('va');
+            $table->foreignId('payment_method_id')->constrained()->restrictOnDelete();
+            $table->string('code', 2)->unique();
+            $table->string('display_text')->unique();
+            $table->string('icon_url')->nullable();
+            $table->tinyInteger('is_shown')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vas');
+        Schema::dropIfExists('payment_methods');
     }
 };

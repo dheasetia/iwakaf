@@ -20,9 +20,10 @@ class BioSeeder extends Seeder
             $user = User::findOrFail($i);
             DB::table('bios')->insert(
                 [
-                    'name' => $user->name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
                     'user_id' => $user->id,
-                    'phone' => '08' . fake()->randomNumber(9, false),
+                    'phone_number' => '08' . fake()->randomNumber(9, false),
                     'address' => fake()->streetAddress(),
                     'village' => ucfirst(fake()->word(1)),
                     'district' => ucfirst(fake()->word(1)),

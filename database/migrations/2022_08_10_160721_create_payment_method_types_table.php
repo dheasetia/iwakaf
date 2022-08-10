@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('digital_money', function (Blueprint $table) {
+        Schema::create('payment_method_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('icon');
+            $table->string('type')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('digital_money');
+        Schema::dropIfExists('payment_method_types');
     }
 };

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('bios', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('phone');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone_number');
             $table->string('address')->nullable();
             $table->string('village')->nullable();
             $table->string('district')->nullable();
