@@ -17,9 +17,12 @@ class DatabaseSeeder extends Seeder
     {
          User::factory(10)->create();
          $this->call([
+             UserDefaultSeeder::class,
              BioSeeder::class,
              PaymentMethodTypeSeeder::class,
-             PaymentMethodSeeder::class
+             PaymentMethodSeeder::class,
+             CategorySeeder::class,
+             ProjectSeeder::class
          ]);
 
         // \App\Models\User::factory()->create([

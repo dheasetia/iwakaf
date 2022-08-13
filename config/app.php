@@ -154,6 +154,13 @@ return [
     |
     */
 
+    /*
+     * From Onaiza Customization
+     */
+
+    'duitku_api_key' => env('DUITKU_API'),
+    'duitku_merchant_code' => env('MERCHANT_CODE'),
+
     'providers' => [
 
         /*
@@ -195,6 +202,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Onaiza Custom Provider
+         */
+        App\Providers\DuitkuServiceProvider::class,
+
     ],
 
     /*
@@ -210,6 +222,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'OnaizaDuitku' => App\Helper\OnaizaDuitku::class,
     ])->toArray(),
 
 ];

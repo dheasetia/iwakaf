@@ -16,7 +16,7 @@ class BioResource extends JsonResource
     {
         return [
             'name'  => $this->first_name,
-            'phone' => $this->phone
+            'phone' => $this->phone,
         ];
     }
 }

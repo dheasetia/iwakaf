@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,9 @@ class BioSeeder extends Seeder
                     'province' => fake()->state(),
                     'zip_code' => fake()->postcode(),
                     'avatar_url' => 'https://placekitten.com/300/300',
-                    'level' => 'wakif'
+                    'level' => 'wakif',
+                    'created_at'    => Carbon::now()->format('Y-m-d h:i:s'),
+                    'updated_at'    => Carbon::now()->format('Y-m-d h:i:s')
                 ]
             );
         }

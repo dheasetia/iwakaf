@@ -9,8 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $dates = ['date_start', 'date_end'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
 }

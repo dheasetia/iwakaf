@@ -13,18 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bills', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_id');
             $table->foreignId('project_id')->constrained()->restrictOnDelete();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->string('duitku_reference_number')->nullable();
-            $table->dateTime('date_billed')->nullable();
+            $table->dateTime('order_time')->nullable();
             $table->string('email');
             $table->string('number');
-            $table->decimal('payment_amount');
-            $table->decimal('maintenance_fee')->default(0);
-            $table->decimal('payment_fee')->default(0);
+            $table->bigInteger('payment_amount');
+            $table->bigInteger('maintenance_fee')->default(0);
+            $table->bigInteger('payment_fee')->default(0);
             $table->string('behalf')->nullable();
             $table->string('payment_method', 2);
             $table->text('comment')->nullable();
@@ -52,6 +52,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bills');
+        Schema::dropIfExists('orders');
     }
 };

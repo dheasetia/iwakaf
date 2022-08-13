@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
             $table->string('title');
             $table->string('location');
-            $table->decimal('target_amount');
+            $table->bigInteger('target_amount');
             $table->integer('days_target');
             $table->date('date_start');
             $table->date('date_end');
@@ -27,11 +27,11 @@ return new class extends Migration
             $table->string('picture_url')->nullable();
             $table->string('featured_picture_url')->nullable();
             $table->text('caption')->nullable();
-            $table->decimal('first_choice_amount')->default(0);
-            $table->decimal('second_choice_amount')->default(0);
-            $table->decimal('third_choice_amount')->default(0);
-            $table->decimal('fourth_choice_amount')->default(0);
-            $table->decimal('maintenance_fee')->default(0);
+            $table->bigInteger('first_choice_amount')->default(0);
+            $table->bigInteger('second_choice_amount')->default(0);
+            $table->bigInteger('third_choice_amount')->default(0);
+            $table->bigInteger('fourth_choice_amount')->default(0);
+            $table->bigInteger('maintenance_fee')->default(0);
             $table->tinyInteger('is_favourite');
             $table->timestamps();
 

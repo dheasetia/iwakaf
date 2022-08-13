@@ -37,7 +37,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
     Route::post('/projects', [\App\Http\Controllers\ProjectController::class, 'store']);
     Route::put('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);
-    Route::delete('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'delete']);
+    Route::delete('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy']);
 
+
+    // ====== Duitku ====== //
+    //get payment method
+    Route::post('/getpaymentmethod', [\App\Http\Controllers\PaymentController::class, 'get_payment_method']);
 
 });

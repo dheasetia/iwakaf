@@ -47,4 +47,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Bio::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        $full_name = strtolower($this->first_name . ' ' . $this->last_name);
+        return ucwords($full_name);
+
+    }
 }
