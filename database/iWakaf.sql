@@ -170,7 +170,7 @@ CREATE TABLE `bios` (
   PRIMARY KEY (`id`),
   KEY `bios_user_id_foreign` (`user_id`),
   CONSTRAINT `bios_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,6 +179,7 @@ CREATE TABLE `bios` (
 
 LOCK TABLES `bios` WRITE;
 /*!40000 ALTER TABLE `bios` DISABLE KEYS */;
+INSERT INTO `bios` VALUES (1,1,'Kuncara','Prasetyo','08110997196','Dk. Baing No. 310','Aut','Ut','Banda Aceh','Kalimantan Tengah','78026','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(2,2,'Garan','Utami','08656665260','Jr. K.H. Wahid Hasyim (Kopo) No. 633','Reiciendis','Ex','Bukittinggi','Bengkulu','20315','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(3,3,'Elisa','Pratama','08288881749','Jln. Yohanes No. 220','Totam','Asperiores','Cimahi','Nusa Tenggara Timur','55277','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(4,4,'Jatmiko','Dongoran','08864719427','Gg. Sukabumi No. 953','Eum','Quam','Langsa','Sumatera Barat','32325','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(5,5,'Najib','Tampubolon','08977199344','Jln. Abdul Muis No. 641','Aperiam','Blanditiis','Manado','Jambi','86242','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(6,6,'Luwar','Hakim','08569508566','Jr. Pelajar Pejuang 45 No. 814','Labore','Consequatur','Bandar Lampung','Bali','86413','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(7,7,'Diah','Sinaga','08237085753','Psr. Astana Anyar No. 56','Dolorum','Doloremque','Bau-Bau','Sumatera Barat','87846','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(8,8,'Halim','Wijaya','08906737395','Psr. Surapati No. 940','Aspernatur','Qui','Batam','Kalimantan Selatan','85271','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(9,9,'Silvia','Permadi','08499093660','Jr. Baabur Royan No. 188','Deleniti','Unde','Cirebon','Sulawesi Tengah','67149','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(10,10,'Chandra','Hartati','08474612690','Jln. Bakhita No. 945','Adipisci','Sunt','Balikpapan','Kepulauan Riau','42945','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19');
 /*!40000 ALTER TABLE `bios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +326,7 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,6 +335,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Pendidikan','pendidikan.png',NULL,NULL),(2,'Sosial','charity.png',NULL,NULL),(3,'Dakwah','dakwah.png',NULL,NULL),(4,'Kesehatan','kesehatan.png',NULL,NULL),(5,'Umum','umum.png',NULL,NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -511,7 +513,7 @@ CREATE TABLE `payment_method_types` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `payment_method_types_type_unique` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,6 +522,7 @@ CREATE TABLE `payment_method_types` (
 
 LOCK TABLES `payment_method_types` WRITE;
 /*!40000 ALTER TABLE `payment_method_types` DISABLE KEYS */;
+INSERT INTO `payment_method_types` VALUES (1,'Credit Card',NULL,NULL),(2,'Virtual Account',NULL,NULL),(3,'Ritel',NULL,NULL),(4,'E-Wallet',NULL,NULL),(5,'QRIS',NULL,NULL),(6,'Kredit',NULL,NULL);
 /*!40000 ALTER TABLE `payment_method_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +547,7 @@ CREATE TABLE `payment_methods` (
   UNIQUE KEY `payment_methods_display_text_unique` (`display_text`),
   KEY `payment_methods_payment_method_id_foreign` (`payment_method_id`),
   CONSTRAINT `payment_methods_payment_method_id_foreign` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`) ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,6 +556,7 @@ CREATE TABLE `payment_methods` (
 
 LOCK TABLES `payment_methods` WRITE;
 /*!40000 ALTER TABLE `payment_methods` DISABLE KEYS */;
+INSERT INTO `payment_methods` VALUES (1,1,'VC','(Visa / Master Card / JCB)',NULL,1,NULL,NULL),(2,2,'BC','BCA Virtual Account',NULL,1,NULL,NULL),(3,2,'M2','Mandiri Virtual Account',NULL,1,NULL,NULL),(4,2,'VA','Maybank Virtual Account',NULL,0,NULL,NULL),(5,2,'I1','BNI Virtual Account',NULL,1,NULL,NULL),(6,2,'B1','CIMB Niaga Virtual Account',NULL,1,NULL,NULL),(7,2,'BT','Permata Bank Virtual Account',NULL,1,NULL,NULL),(8,2,'A1','ATM Bersama',NULL,1,NULL,NULL),(9,2,'AG','Bank Artha Graha',NULL,1,NULL,NULL),(10,2,'NC','Bank Neo Commerce/BNC',NULL,0,NULL,NULL),(11,2,'BR','BRIVA',NULL,1,NULL,NULL),(12,2,'S1','Bank Sahabat Sampoerna',NULL,0,NULL,NULL),(13,3,'FT','Pegadaian/ALFA/Pos',NULL,1,NULL,NULL),(14,3,'A2','POS Indonesia',NULL,1,NULL,NULL),(15,3,'IR','Indomaret',NULL,1,NULL,NULL),(16,4,'OV','OVO',NULL,0,NULL,NULL),(17,4,'SA','Shopee Pay Apps',NULL,0,NULL,NULL),(18,4,'LF','LinkAja Apps (Fixed Fee)',NULL,0,NULL,NULL),(19,4,'LA','LinkAja Apps (Percentage Fee)',NULL,0,NULL,NULL),(20,4,'DA','DANA',NULL,0,NULL,NULL),(21,4,'SL','Shopee Pay Account Link',NULL,0,NULL,NULL),(22,4,'OL','OVO Account Link',NULL,0,NULL,NULL),(23,5,'SP','Shopee Pay',NULL,0,NULL,NULL),(24,5,'LQ','LinkAja',NULL,0,NULL,NULL),(25,5,'NQ','Nobu',NULL,0,NULL,NULL),(26,6,'DN','Indodana Paylater',NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `payment_methods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -726,7 +730,7 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`),
   KEY `projects_category_id_foreign` (`category_id`),
   CONSTRAINT `projects_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -735,6 +739,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (1,1,'Wakaf Mushaf Al Quran','Surakarta',200000000,60,'2022-08-01','2022-09-30',1,'','wakaf-mushaf.jpeg','wakaf-mushaf.jpeg','Divisi Sosial I-Salam memberi kesempatan untuk meraih kebaikan tanpa henti melalui wakaf Mushaf Al-Qur\'an untuk masjid, pesantren, tahfizh, TPA, dan selainnya. Lipatgandakan wakaf anda dengan terus menerus menambah donasi anda di iSalam.',100000,200000,500000,1000000,5000,1,'2022-08-13 04:52:19','2022-08-13 04:52:19');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -868,7 +873,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -877,6 +882,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Kuncara','Prasetyo','kenzie.megantara@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','WMdvADNFpO','2022-08-13 16:52:19','2022-08-13 16:52:19'),(2,'Garan','Utami','hutasoit.rini@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','PmALCFFuts','2022-08-13 16:52:19','2022-08-13 16:52:19'),(3,'Elisa','Pratama','mansur.salimah@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','vDXR0xYM2c','2022-08-13 16:52:19','2022-08-13 16:52:19'),(4,'Jatmiko','Dongoran','hpudjiastuti@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','6GAaYOtKQu','2022-08-13 16:52:19','2022-08-13 16:52:19'),(5,'Najib','Tampubolon','galak.latupono@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','Q8cGnVnNPj','2022-08-13 16:52:19','2022-08-13 16:52:19'),(6,'Luwar','Hakim','gamani.lailasari@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','ZrstCuZN5V','2022-08-13 16:52:19','2022-08-13 16:52:19'),(7,'Diah','Sinaga','oktaviani.viman@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XGuvMQ0zTW','2022-08-13 16:52:19','2022-08-13 16:52:19'),(8,'Halim','Wijaya','atampubolon@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','IDS4i6LBKl','2022-08-13 16:52:19','2022-08-13 16:52:19'),(9,'Silvia','Permadi','michelle23@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','K1YHAH24g9','2022-08-13 16:52:19','2022-08-13 16:52:19'),(10,'Chandra','Hartati','titi64@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','8imBcOSVlL','2022-08-13 16:52:19','2022-08-13 16:52:19'),(11,'Muhammad','Alwi','dheasetia@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','mHFVplhW9t','2022-08-13 04:52:19','2022-08-13 04:52:19'),(12,'Abdurrahman','Fawwaz','inifawaz@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','0uhdAK6ssl','2022-08-13 04:52:19','2022-08-13 04:52:19'),(13,'Eko','Prasetio','abuusamahabdurrahman@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','QxwuEox6Gu','2022-08-13 04:52:19','2022-08-13 04:52:19');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -946,4 +952,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-13 23:50:05
+-- Dump completed on 2022-08-13 23:53:52
