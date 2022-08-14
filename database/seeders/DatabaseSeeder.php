@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
              PaymentMethodTypeSeeder::class,
              PaymentMethodSeeder::class,
              CategorySeeder::class,
-             ProjectSeeder::class
+             ArticleCategorySeeder::class,
+             ProjectSeeder::class,
+             ArticleSeeder::class,
          ]);
 
         // \App\Models\User::factory()->create([

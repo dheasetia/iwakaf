@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function article_category()
+    {
+        return $this->belongsTo(ArticleCategory::class);
+    }
+
+    public function editor()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

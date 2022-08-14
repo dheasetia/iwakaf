@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('picture_url')->nullable();
             $table->tinyInteger('is_published')->default('0');
-            $table->foreignId('category_id')->constrained()->restrictOnDelete();
+            $table->foreignId('article_category_id')->constrained()->restrictOnDelete();
             $table->foreignId('editor_id')->constrained('users')->restrictOnDelete();
             $table->timestamps();
         });

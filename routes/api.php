@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+//Route::post('/login', function (){
+//    return 'joz';
+//});
+
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
@@ -39,6 +43,33 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::put('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);
     Route::delete('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy']);
 
+    //==== ArticleCategory ====
+    Route::get('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'index']);
+    Route::get('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'show']);
+    Route::post('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'store']);
+    Route::put('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'update']);
+    Route::delete('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'destroy']);
+
+
+    //==== ArticleComment ====
+    Route::get('/articlecomments', [\App\Http\Controllers\ArticleCommentController::class, 'index']);
+    Route::get('/articlecomments/{id}', [\App\Http\Controllers\ArticleCommentController::class, 'show']);
+    Route::post('/articlecomments', [\App\Http\Controllers\ArticleCommentController::class, 'store']);
+    Route::put('/articlecomments/{id}', [\App\Http\Controllers\ArticleCommentController::class, 'update']);
+    Route::delete('/articlecomments/{id}', [\App\Http\Controllers\ArticleCommentController::class, 'destroy']);
+
+    //==== Articles ====
+    Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
+    Route::get('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
+    Route::post('/articles', [\App\Http\Controllers\ArticleController::class, 'store']);
+    Route::put('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'update']);
+    Route::delete('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'destroy']);
+
+
+    // ==== Bio ====
+    Route::get('/bios', [\App\Http\Controllers\BioController::class, 'index']);
+    Route::get('/bios/{id}', [\App\Http\Controllers\BioController::class, 'show']);
+    Route::put('/bios/{id}', [\App\Http\Controllers\BioController::class, 'update']);
 
     // ====== Duitku ====== //
     //get payment method

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginPostRequest;
 use App\Http\Requests\RegisterPostRequest;
+use App\Http\Resources\BioResource;
 use App\Http\Resources\UserResource;
 use App\Models\Bio;
 use Illuminate\Http\Request;
@@ -49,7 +50,6 @@ class AuthController extends Controller
     public function login(LoginPostRequest $request)
     {
         $user = User::where('email', '=', $request->email)->first();
-
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'status'    => 'failed',
@@ -57,7 +57,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken(env('SALT_TOKEN'))->plainTextToken;
+        $token = $user->createToken('iwakafisalamfoundation')->plainTextToken;
         return response([
             'status'    => 'success',
             'user'  => new UserResource($user),

@@ -10,9 +10,8 @@ class Bio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'user_id',
-        'phone',
+        'phone_number',
         'address',
         'village',
         'district',
@@ -26,6 +25,13 @@ class Bio extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        $full_name = strtolower($this->first_name . ' ' . $this->last_name);
+        return ucwords($full_name);
+
     }
 
 }
