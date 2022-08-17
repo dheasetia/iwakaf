@@ -74,5 +74,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // ====== Duitku ====== //
     //get payment method
     Route::post('/getpaymentmethod', [\App\Http\Controllers\PaymentController::class, 'get_payment_method']);
+    Route::post('/transactioninquiries/create', [\App\Http\Controllers\TransactionInquiryController::class, 'create_inquiry']);
 
 });
