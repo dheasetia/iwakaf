@@ -2,9 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Helper\OnaizaDuitku;
+use App\Models\Story;
+use App\Models\Update;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectResource extends JsonResource
+class ProjectDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +27,6 @@ class ProjectResource extends JsonResource
             'days_target'   => $this->days_target,
             'date_start'    => $this->date_start->format('d/m/Y'),
             'date_end'      => $this->date_end->format('d/m/Y'),
-            'is_shown'      => $this->is_shown,
             'facebook_link' => $this->facebook_link,
             'picture_url' => asset('assets/img/projects/pictures') . '/' . $this->picture_url,
             'featured_picture_url' => asset('assets/img/projects/featured_pictures') . '/' . $this->featured_picture_url,
@@ -35,6 +37,12 @@ class ProjectResource extends JsonResource
             'third_choice_amount'   => $this->third_choice_amount,
             'fourth_choice_amount'  => $this->fourth_choice_amount,
             'maintenance_fee'   => $this->maintenance_fee,
+            'amount_collected'  => OnaizaDuitku::get_project_amount_collected($this->id),
+            'days_remaining'    => OnaizaDuitku::get_project_remaining_days($this->id),
+            'backers'   => OnaizaDuitku::get_project_backers($this->id),
+            'total_backers' => count(OnaizaDuitku::get_project_backers($this->id)),
+            'story' => Story::where('project_id', '=', $this->id)->first(),
+            'updates'   => Update::where('project_id', '=', $this->id)->get(),
         ];
     }
 }

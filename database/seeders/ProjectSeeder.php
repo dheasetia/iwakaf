@@ -19,6 +19,7 @@ class ProjectSeeder extends Seeder
         DB::table('projects')->insert([
             [
                 'category_id' => 1,
+                'name'  => 'Wakaf Mushaf',
                 'title' => 'Wakaf Mushaf Al Quran',
                 'location' => 'Surakarta',
                 'target_amount' => 200000000,

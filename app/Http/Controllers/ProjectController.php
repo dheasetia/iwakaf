@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectPostRequest;
 use App\Http\Requests\ProjectUpdateRequest;
+use App\Http\Resources\ProjectDetailResource;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Carbon\Carbon;
@@ -14,7 +15,8 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = ProjectResource::collection(Project::all());
+        $shown_projects = Project::where('is_shown', '=', 1)->get();
+        $projects = ProjectResource::collection($shown_projects);
         return response([
             'projects' => $projects
         ], 200);
@@ -24,7 +26,7 @@ class ProjectController extends Controller
     {
         $project =  new ProjectResource(Project::findOrFail($id));
         return response([
-            'project'   => $project
+            'project'   => new ProjectDetailResource($project)
         ], 200);
     }
 
@@ -45,6 +47,7 @@ class ProjectController extends Controller
         }
 
         $project->category_id = $request->category_id;
+        $project->name = $request->name;
         $project->title = $request->title;
         $project->location = $request->location;
         $project->target_amount = $request->target_amount;

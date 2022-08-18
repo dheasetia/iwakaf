@@ -34,6 +34,11 @@ return new class extends Migration
             $table->string('signature');
             $table->integer('expiry_period')->comment('Masa berlaku dalam menit');
             $table->string('account_link')->nullable();
+            $table->string('on_behalf')->nullable();
+            $table->text('comment')->nullable();
+            $table->integer('transaction_fee');
+            $table->integer('maintenance_fee');
+            $table->tinyInteger('is_anonymous')->default(0);
             $table->timestamps();
         });
     }

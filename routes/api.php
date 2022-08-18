@@ -24,6 +24,14 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 //    return 'joz';
 //});
 
+Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index']);
+Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
+
+Route::get('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'index']);
+Route::get('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'show']);
+
+Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
+Route::get('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
@@ -37,15 +45,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::put('/users/{id}', [\App\Http\Controllers\UserController::class, 'update']);
     Route::delete('/users/{id}', [\App\Http\Controllers\UserController::class, 'destroy']);
 
-    Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index']);
-    Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
+
     Route::post('/projects', [\App\Http\Controllers\ProjectController::class, 'store']);
     Route::put('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);
     Route::delete('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy']);
 
     //==== ArticleCategory ====
-    Route::get('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'index']);
-    Route::get('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'show']);
+
     Route::post('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'store']);
     Route::put('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'update']);
     Route::delete('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'destroy']);
@@ -59,12 +65,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::delete('/articlecomments/{id}', [\App\Http\Controllers\ArticleCommentController::class, 'destroy']);
 
     //==== Articles ====
-    Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
-    Route::get('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
+
     Route::post('/articles', [\App\Http\Controllers\ArticleController::class, 'store']);
     Route::put('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'update']);
     Route::delete('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'destroy']);
 
+    Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index']);
 
     // ==== Bio ====
     Route::get('/bios', [\App\Http\Controllers\BioController::class, 'index']);

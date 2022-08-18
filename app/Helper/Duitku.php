@@ -3,7 +3,10 @@
 namespace App\Helper;
 
 use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Project;
 use App\Models\TransactionInquiry;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -31,10 +34,9 @@ class Duitku
      * Get payment method
      * @return string json {paymentFee:array, responseCode:string, responseCode:string}
      */
-    public function get_payment_method()
+    public function get_payment_method($payment_amount)
     {
         $datetime = date('Y-m-d H:i:s');
-        $payment_amount = 10000;
         $signature = hash('sha256',$this->merchant_code . $payment_amount . $datetime . $this->api_key);
 
         $params = array(
@@ -157,6 +159,43 @@ class Duitku
     public function get_expiry_period()
     {
         return $this->expiry_period;
+    }
+
+    public function get_project_amount_collected($project_id)
+    {
+        $payments = Payment::where('project_id', '=', $project_id)->get();
+        if ($payments != null) {
+            return $payments->sum('amount');
+        }
+        return 0;
+    }
+
+    public function get_project_remaining_days($project_id)
+    {
+        $project = Project::find($project_id);
+        if ($project == null) {
+            return 0;
+        }
+        $now = Carbon::now('Asia/Jakarta');
+        $end = Carbon::createFromFormat('Y-m-d', $project->date_end->format('Y-m-d'), 'Asia/Jakarta');
+        if ($now->greaterThan($end)) {
+            return 0;
+        }
+        return $now->diffInDays($end);
+    }
+
+    public function get_project_backers($project_id)
+    {
+        $payments_project = Payment::where('project_id', '=', $project_id)->get();
+        $backers = array();
+
+        foreach ($payments_project as $payment) {
+            $user = User::find($payment->user_id);
+            $backers[] = [$user];
+        }
+
+        return $backers;
+
     }
 
 }

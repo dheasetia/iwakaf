@@ -143,6 +143,11 @@ class TransactionInquiryController extends Controller
                 $transaction_inquiry->callback_url = OnaizaDuitku::get_callback_url();
                 $transaction_inquiry->signature = md5(OnaizaDuitku::get_merchant_code() . $merchantOrderId . $paymentAmount . OnaizaDuitku::get_api_key());
                 $transaction_inquiry->expiry_period = OnaizaDuitku::get_expiry_period();
+                $transaction_inquiry->transaction_fee = $request->transaction_fee;
+                $transaction_inquiry->maintenance_fee = $request->maintenance_fee;
+                $transaction_inquiry->is_anonimous = $request->is_anonimous;
+                $transaction_inquiry->comment = $request->comment;
+
                 $transaction_inquiry->save();
             } else {
                 return response([

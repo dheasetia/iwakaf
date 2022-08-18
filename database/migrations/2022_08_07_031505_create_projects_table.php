@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
+            $table->string('name');
             $table->string('title');
             $table->string('location');
             $table->bigInteger('target_amount');
             $table->integer('days_target');
             $table->date('date_start');
             $table->date('date_end');
-            $table->tinyInteger('is_shown')->default(0);
             $table->string('facebook_link')->nullable();
             $table->string('picture_url')->nullable();
             $table->string('featured_picture_url')->nullable();
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->bigInteger('third_choice_amount')->default(0);
             $table->bigInteger('fourth_choice_amount')->default(0);
             $table->bigInteger('maintenance_fee')->default(0);
+            $table->tinyInteger('is_shown')->default(0);
             $table->tinyInteger('is_favourite');
             $table->timestamps();
 
