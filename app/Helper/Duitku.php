@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\TransactionInquiry;
 use App\Models\User;
 use Carbon\Carbon;
+use Duitku\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
@@ -72,7 +73,7 @@ class Duitku
         string $accountLink = null,
     )
     {
-        $url = env('APP_ENV') === 'local' ? 'https://sandbox.duitku.com/webapi/api/merchant/v2/inquiry' : 'https://passport.duitku.com/webapi/api/merchant/v2/inquiry';
+        $url = 'https://sandbox.duitku.com/webapi/api/merchant/v2/inquiry';
 
         $params = array(
             'merchantCode' => $this->merchant_code,
@@ -93,11 +94,11 @@ class Duitku
             'signature' => md5($this->merchant_code . $merchantOrderId . $paymentAmount . $this->api_key),
             'expiryPeriod' => $this->expiry_period
         );
-        $params_string = json_encode($params);
 
+//        $params_string = json_encode($params);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-            'Content-Length: ' . strlen($params_string)
+//            'Content-Length: ' . strlen($params)
         ])->post($url, $params);
 
         if ($response->successful()) {
@@ -198,4 +199,58 @@ class Duitku
 
     }
 
+    public function check_transaction_status($merchant_order_id)
+    {
+        $merchantCode = $this->merchant_code;
+        $apiKey = $this->api_key;
+        $merchantOrderId = $merchant_order_id;
+
+        $signature = md5($merchantCode . $merchantOrderId . $apiKey);
+
+        $params = array(
+            'merchantCode' => $merchantCode,
+            'merchantOrderId' => $merchantOrderId,
+            'signature' => $signature
+        );
+
+        $params_string = json_encode($params);
+        $url = 'https://sandbox.duitku.com/webapi/api/merchant/transactionStatus';
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Content-Length: ' . strlen($params_string)
+        ])->post($url, $params);
+
+        if ($response->successful()) {
+            $result = json_decode($response, true);
+        } else {
+            $result = json_decode($response);
+            return "Server Error: " . $result->Message;
+        }
+        return $result;
+    }
+
+    /*
+    public function pretend_payment($reference)
+    {
+        $transaction = TransactionInquiry::where('reference', '=', $reference)->first();
+
+        $merchantCode = $transaction->merchant_code;
+        $amount = $transaction->amount;
+        $merchantOrderId = $transaction->merchant_order_id;
+        $productDetail = $transaction->product_details;
+        $additionalParam = $transaction->additional_param;
+        $paymentMethod = $transaction->payment_method;
+        $resultCode = "00";
+        $merchantUserId = $transaction->merchant_user_info;
+        $reference = $transaction->response_reference;
+        $signature = $transaction->bd92d004ce0ed37599aff628f5bd3762;
+
+        return response([
+            'merchant'
+
+        ]);
+    }
+
+    */
 }

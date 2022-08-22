@@ -39,6 +39,15 @@ return new class extends Migration
             $table->integer('transaction_fee');
             $table->integer('maintenance_fee');
             $table->tinyInteger('is_anonymous')->default(0);
+
+            $table->string('response_merchant_code')->nullable();
+            $table->string('response_reference')->nullable();
+            $table->string('response_payment_url')->nullable();
+            $table->string('response_va_number')->nullable();
+            $table->bigInteger('response_amount')->nullable();
+            $table->string('response_status_code')->nullable();
+            $table->string('response_status_message')->nullable();
+            $table->string('payment_status', 2)->nullable();
             $table->timestamps();
         });
     }

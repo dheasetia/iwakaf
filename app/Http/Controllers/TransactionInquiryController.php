@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helper\OnaizaDuitku;
+use App\Http\Requests\CheckTransactionPostRequest;
 use App\Http\Requests\TransactionInquiryPostRequest;
 use App\Models\Address;
 use App\Models\CustomerDetail;
+use App\Models\InquiryResponse;
 use App\Models\Item;
 use App\Models\ItemDetail;
 use App\Models\Order;
@@ -16,6 +18,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionInquiryController extends Controller
 {
+    public function index()
+    {
+        $transactions = TransactionInquiry::all();
+        return response($transactions, 200);
+    }
+
     public function create_inquiry(TransactionInquiryPostRequest $request)
     {
         /*
@@ -127,7 +135,7 @@ class TransactionInquiryController extends Controller
 
                 $transaction_inquiry = new TransactionInquiry();
                 $transaction_inquiry->project_id = $project->id;
-                $transaction_inquiry->user_id = Auth::user()->id;
+                $transaction_inquiry->user_id = $user->id;
                 $transaction_inquiry->merchant_code = OnaizaDuitku::get_merchant_code();
                 $transaction_inquiry->payment_amount = $paymentAmount;
                 $transaction_inquiry->merchant_order_id = $merchantOrderId;
@@ -144,11 +152,19 @@ class TransactionInquiryController extends Controller
                 $transaction_inquiry->signature = md5(OnaizaDuitku::get_merchant_code() . $merchantOrderId . $paymentAmount . OnaizaDuitku::get_api_key());
                 $transaction_inquiry->expiry_period = OnaizaDuitku::get_expiry_period();
                 $transaction_inquiry->transaction_fee = $request->transaction_fee;
-                $transaction_inquiry->maintenance_fee = $request->maintenance_fee;
-                $transaction_inquiry->is_anonimous = $request->is_anonimous;
+                $transaction_inquiry->maintenance_fee = $project->maintenance_fee;
+                $transaction_inquiry->is_anonymous = $request->is_anonymous == null ? 0 : $request->is_anonymous;
                 $transaction_inquiry->comment = $request->comment;
 
+                $transaction_inquiry->response_merchant_code = $response['merchantCode'];
+                $transaction_inquiry->response_reference = $response['reference'];
+                $transaction_inquiry->response_payment_url = $response['paymentUrl'];
+                $transaction_inquiry->response_va_number = $response['vaNumber'];
+                $transaction_inquiry->response_amount = $response['amount'];
+                $transaction_inquiry->response_status_code = $response['statusCode'];
+                $transaction_inquiry->response_status_message = $response['statusMessage'];
                 $transaction_inquiry->save();
+
             } else {
                 return response([
                     'status'    => 'failed',
@@ -161,9 +177,23 @@ class TransactionInquiryController extends Controller
                 'message'   => $e.getMessage()
             ]);
         }
-
         return response($response);
     }
+
+    public function check_transaction_status(CheckTransactionPostRequest $request)
+    {
+        $merchantOrderId = $request->merchant_order_id;
+        try {
+            $response = OnaizaDuitku::check_transaction_status($merchantOrderId);
+        } catch (Exception $e) {
+            return response([
+                'status'    => 'failed',
+                'message'   => $e.getMessage()
+            ]);
+        }
+        return response($response);
+    }
+
 
 
 }

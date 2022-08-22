@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionInquiry extends Model
 {
     use HasFactory;
+
+    private mixed $is_anonimous;
 }

@@ -18,6 +18,7 @@ class ProjectDetailResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'    => $this->id,
             'category_id'   => $this->category_id,
             'name'  => $this->name,
             'category'  => $this->category->category,

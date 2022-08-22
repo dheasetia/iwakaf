@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class TransactionInquiryPostRequest extends FormRequest
+class CheckTransactionPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,7 @@ class TransactionInquiryPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id'    => 'required',
-            'payment_amount'    => 'required|numeric',
-            'payment_method'    => 'required|max:2|min:2',
-            'transaction_fee'   => 'required'
+            'merchant_order_id' => 'required'
         ];
     }
 }

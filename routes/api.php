@@ -33,6 +33,9 @@ Route::get('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryCont
 Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
 Route::get('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
 
+// === CALLBACK ===
+Route::post('/isalamwakafpaymentcallback', [\App\Http\Controllers\PaymentController::class, 'callback']);
+
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
     //Auth
@@ -79,6 +82,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // ====== Duitku ====== //
     //get payment method
+    Route::get('/transactioninquiries', [\App\Http\Controllers\TransactionInquiryController::class, 'index']);
+    Route::post('/checktransactionstatus', [\App\Http\Controllers\TransactionInquiryController::class, 'check_transaction_status']);
     Route::post('/getpaymentmethod', [\App\Http\Controllers\PaymentController::class, 'get_payment_method']);
     Route::post('/transactioninquiries/create', [\App\Http\Controllers\TransactionInquiryController::class, 'create_inquiry']);
 
