@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `addresses`
+--
+
+DROP TABLE IF EXISTS `addresses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `addresses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `addresses`
+--
+
+LOCK TABLES `addresses` WRITE;
+/*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `article_categories`
 --
 
@@ -24,16 +55,12 @@ DROP TABLE IF EXISTS `article_categories`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article_categories` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `article_id` bigint unsigned NOT NULL,
-  `category_id` bigint unsigned NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `article_categories_article_id_foreign` (`article_id`),
-  KEY `article_categories_category_id_foreign` (`category_id`),
-  CONSTRAINT `article_categories_article_id_foreign` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `article_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `article_categories_category_unique` (`category`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +69,7 @@ CREATE TABLE `article_categories` (
 
 LOCK TABLES `article_categories` WRITE;
 /*!40000 ALTER TABLE `article_categories` DISABLE KEYS */;
+INSERT INTO `article_categories` VALUES (1,'Pendidikan',NULL,NULL),(2,'Sosial',NULL,NULL),(3,'Dakwah',NULL,NULL),(4,'Kesehatan',NULL,NULL),(5,'Umum',NULL,NULL);
 /*!40000 ALTER TABLE `article_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,18 +149,18 @@ CREATE TABLE `articles` (
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_published` tinyint NOT NULL DEFAULT '0',
-  `category_id` bigint unsigned NOT NULL,
+  `article_category_id` bigint unsigned NOT NULL,
   `editor_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `articles_user_id_foreign` (`user_id`),
-  KEY `articles_category_id_foreign` (`category_id`),
+  KEY `articles_article_category_id_foreign` (`article_category_id`),
   KEY `articles_editor_id_foreign` (`editor_id`),
-  CONSTRAINT `articles_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `articles_article_category_id_foreign` FOREIGN KEY (`article_category_id`) REFERENCES `article_categories` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `articles_editor_id_foreign` FOREIGN KEY (`editor_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `articles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,6 +169,7 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+INSERT INTO `articles` VALUES (1,7,'Medan','Qui fugiat voluptas dolores accusantium est eos.','Ex quia et nulla quaerat consequatur. Sint non est fuga ratione ut dolorem omnis. Tenetur nulla odio ut amet. Repellat eum consequatur similique ratione. Est voluptatem aperiam officia minus dolores modi illo.','masjid.jpeg',0,1,6,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(2,8,'Serang','Possimus quibusdam temporibus deleniti repellat quasi ad in qui.','Esse consectetur ipsam doloremque molestiae. Quos reprehenderit placeat dignissimos laborum officiis. Vel molestias maxime eos voluptatibus sunt quae voluptatem.','masjid.jpeg',0,1,1,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(3,7,'Mojokerto','Et labore minima exercitationem et dolores exercitationem illum.','Et sed voluptatem iusto et. Praesentium est adipisci numquam earum aut sed nihil occaecati. Repudiandae rerum necessitatibus pariatur exercitationem quis. Voluptas rem totam ut omnis eveniet aut.','masjid.jpeg',0,1,9,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(4,2,'Depok','Doloribus cupiditate fuga voluptate quia modi illum.','Provident excepturi nihil quasi et. Quisquam maiores doloribus quis eius velit ea consequatur. Aut unde et porro repudiandae.','masjid.jpeg',0,1,5,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(5,5,'Sawahlunto','Eum eius voluptates rem amet officia nulla rerum.','Numquam neque necessitatibus ad harum iusto. Aperiam quia voluptatem et quia ut a. Omnis magni et ea eum quas est hic eum. Qui consequatur cupiditate ut deserunt iste dolores enim.','masjid.jpeg',0,1,6,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(6,3,'Sungai Penuh','Non rerum consequatur aut autem beatae.','Et sint vel explicabo. Consequatur ut deserunt eos assumenda quaerat. In quam laborum dolor in. Possimus autem atque tempora odit.','masjid.jpeg',0,1,1,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(7,7,'Palembang','Magnam sequi et omnis mollitia recusandae amet.','Quaerat quia libero quo nihil. Dolorem error incidunt totam possimus ducimus eos sit. Voluptas et nemo doloribus enim quo ullam neque. Quam nisi voluptatem qui ullam ad quia.','masjid.jpeg',0,1,2,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(8,8,'Palangka Raya','Accusantium sint quia architecto quisquam ipsum laboriosam.','Et nihil repudiandae ut quam esse. Doloremque nostrum est earum aut et. Officia animi assumenda omnis ea. Blanditiis quis nesciunt molestiae soluta saepe.','masjid.jpeg',0,1,9,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(9,9,'Pematangsiantar','Necessitatibus voluptas asperiores et quae.','Corporis qui est ipsa unde. Quo dolores rem accusantium. Voluptates adipisci consequatur consectetur labore dolore error placeat.','masjid.jpeg',0,1,9,'2022-08-19 20:49:48','2022-08-19 20:49:48'),(10,3,'Parepare','Illo incidunt aut enim molestias consequatur eaque tenetur.','Pariatur expedita amet corporis modi quis. Nobis molestiae sequi eligendi inventore. Sequi voluptatem cum nulla vel voluptate unde.','masjid.jpeg',0,1,1,'2022-08-19 20:49:48','2022-08-19 20:49:48');
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +199,7 @@ CREATE TABLE `bios` (
   PRIMARY KEY (`id`),
   KEY `bios_user_id_foreign` (`user_id`),
   CONSTRAINT `bios_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +208,7 @@ CREATE TABLE `bios` (
 
 LOCK TABLES `bios` WRITE;
 /*!40000 ALTER TABLE `bios` DISABLE KEYS */;
-INSERT INTO `bios` VALUES (1,1,'Kuncara','Prasetyo','08110997196','Dk. Baing No. 310','Aut','Ut','Banda Aceh','Kalimantan Tengah','78026','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(2,2,'Garan','Utami','08656665260','Jr. K.H. Wahid Hasyim (Kopo) No. 633','Reiciendis','Ex','Bukittinggi','Bengkulu','20315','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(3,3,'Elisa','Pratama','08288881749','Jln. Yohanes No. 220','Totam','Asperiores','Cimahi','Nusa Tenggara Timur','55277','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(4,4,'Jatmiko','Dongoran','08864719427','Gg. Sukabumi No. 953','Eum','Quam','Langsa','Sumatera Barat','32325','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(5,5,'Najib','Tampubolon','08977199344','Jln. Abdul Muis No. 641','Aperiam','Blanditiis','Manado','Jambi','86242','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(6,6,'Luwar','Hakim','08569508566','Jr. Pelajar Pejuang 45 No. 814','Labore','Consequatur','Bandar Lampung','Bali','86413','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(7,7,'Diah','Sinaga','08237085753','Psr. Astana Anyar No. 56','Dolorum','Doloremque','Bau-Bau','Sumatera Barat','87846','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(8,8,'Halim','Wijaya','08906737395','Psr. Surapati No. 940','Aspernatur','Qui','Batam','Kalimantan Selatan','85271','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(9,9,'Silvia','Permadi','08499093660','Jr. Baabur Royan No. 188','Deleniti','Unde','Cirebon','Sulawesi Tengah','67149','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19'),(10,10,'Chandra','Hartati','08474612690','Jln. Bakhita No. 945','Adipisci','Sunt','Balikpapan','Kepulauan Riau','42945','https://placekitten.com/300/300','wakif','2022-08-13 04:52:19','2022-08-13 04:52:19');
+INSERT INTO `bios` VALUES (1,1,'Cinta','Waluyo','08431107152','Psr. Haji No. 389','Quae','Quas','Balikpapan','Jambi','29893','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(2,2,'Dina','Mulyani','08538241322','Psr. Ters. Pasir Koja No. 40','Aut','Sunt','Binjai','Jawa Timur','87110','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(3,3,'Harja','Nababan','08215330861','Ds. Umalas No. 52','Dolorem','Molestiae','Tangerang Selatan','Aceh','12679','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(4,4,'Yani','Pratiwi','08539840511','Ki. Diponegoro No. 382','Consectetur','Odit','Tanjungbalai','Sulawesi Utara','23950','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(5,5,'Balangga','Saputra','08176835077','Ki. Ir. H. Juanda No. 54','Aut','In','Singkawang','Nusa Tenggara Timur','44058','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(6,6,'Suci','Anggraini','08547038423','Kpg. Nakula No. 195','Ratione','Voluptas','Bima','Jawa Barat','58828','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(7,7,'Almira','Permata','0835327062','Jr. Aceh No. 92','Voluptas','Ullam','Ambon','DKI Jakarta','94887','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(8,8,'Baktiadi','Usamah','08158772537','Ds. Achmad Yani No. 74','Vel','Sint','Bandar Lampung','Bali','51795','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(9,9,'Rahmi','Suryatmi','08620983729','Kpg. Rajawali Barat No. 402','Non','Dolores','Jambi','DKI Jakarta','53969','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(10,10,'Warsa','Latupono','08658246902','Kpg. Perintis Kemerdekaan No. 540','Soluta','Eum','Gunungsitoli','Jawa Barat','65679','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(11,11,'Muhammad','Alwi','08648724033','Kpg. K.H. Maskur No. 22','Dicta','Et','Depok','Kalimantan Timur','12702','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(12,12,'Abdurrahman','Fawwaz','08969186108','Ds. Badak No. 592','Harum','Iste','Tanjung Pinang','Jawa Timur','72140','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48'),(13,13,'Eko','Prasetio','08712843559','Kpg. Bak Air No. 814','Illum','Similique','Cirebon','Gorontalo','74980','https://placekitten.com/300/300','wakif','2022-08-19 20:49:48','2022-08-19 20:49:48');
 /*!40000 ALTER TABLE `bios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,6 +342,41 @@ LOCK TABLES `blogs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `callbacks`
+--
+
+DROP TABLE IF EXISTS `callbacks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `callbacks` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` bigint DEFAULT NULL,
+  `merchant_order_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_detail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `additional_param` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `result_code` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `merchant_user_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `signature` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sp_user_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `callbacks`
+--
+
+LOCK TABLES `callbacks` WRITE;
+/*!40000 ALTER TABLE `callbacks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `callbacks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `categories`
 --
 
@@ -337,6 +401,40 @@ LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` VALUES (1,'Pendidikan','pendidikan.png',NULL,NULL),(2,'Sosial','charity.png',NULL,NULL),(3,'Dakwah','dakwah.png',NULL,NULL),(4,'Kesehatan','kesehatan.png',NULL,NULL),(5,'Umum','umum.png',NULL,NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customer_details`
+--
+
+DROP TABLE IF EXISTS `customer_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customer_details` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `billing_address_id` bigint unsigned NOT NULL,
+  `shipping_address_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_details_billing_address_id_foreign` (`billing_address_id`),
+  KEY `customer_details_shipping_address_id_foreign` (`shipping_address_id`),
+  CONSTRAINT `customer_details_billing_address_id_foreign` FOREIGN KEY (`billing_address_id`) REFERENCES `addresses` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `customer_details_shipping_address_id_foreign` FOREIGN KEY (`shipping_address_id`) REFERENCES `addresses` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer_details`
+--
+
+LOCK TABLES `customer_details` WRITE;
+/*!40000 ALTER TABLE `customer_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -399,6 +497,66 @@ LOCK TABLES `favourite_project` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `inquiry_responses`
+--
+
+DROP TABLE IF EXISTS `inquiry_responses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inquiry_responses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `transaction_inquiry_id` bigint unsigned NOT NULL,
+  `merchant_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `va_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` bigint NOT NULL,
+  `qr_string` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `inquiry_responses_transaction_inquiry_id_foreign` (`transaction_inquiry_id`),
+  CONSTRAINT `inquiry_responses_transaction_inquiry_id_foreign` FOREIGN KEY (`transaction_inquiry_id`) REFERENCES `transaction_inquiries` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inquiry_responses`
+--
+
+LOCK TABLES `inquiry_responses` WRITE;
+/*!40000 ALTER TABLE `inquiry_responses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inquiry_responses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `items` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nama barang yang dibeli',
+  `quantity` int NOT NULL,
+  `price` bigint NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -410,7 +568,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=905 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,7 +577,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (877,'2014_10_12_000000_create_users_table',1),(878,'2014_10_12_100000_create_password_resets_table',1),(879,'2019_08_19_000000_create_failed_jobs_table',1),(880,'2019_12_14_000001_create_personal_access_tokens_table',1),(881,'2022_08_07_031420_create_bios_table',1),(882,'2022_08_07_031434_create_categories_table',1),(883,'2022_08_07_031505_create_projects_table',1),(884,'2022_08_07_031516_create_stories_table',1),(885,'2022_08_07_031534_create_updates_table',1),(886,'2022_08_07_031544_create_orders_table',1),(887,'2022_08_07_031553_create_payments_table',1),(888,'2022_08_07_031604_create_testimonials_table',1),(889,'2022_08_07_031614_create_blogs_table',1),(890,'2022_08_07_031633_create_project_comments_table',1),(891,'2022_08_07_031700_create_blog_comments_table',1),(892,'2022_08_07_031703_create_tags_table',1),(893,'2022_08_07_031729_create_project_tags_table',1),(894,'2022_08_07_031752_create_blog_tags_table',1),(895,'2022_08_07_031759_create_blog_categories_table',1),(896,'2022_08_07_062710_create_virtual_accounts_table',1),(897,'2022_08_07_064359_create_articles_table',1),(898,'2022_08_07_064365_create_article_comments_table',1),(899,'2022_08_07_064365_create_article_tags_table',1),(900,'2022_08_07_064370_create_article_categories_table',1),(901,'2022_08_10_155703_create_favourite_project_table',1),(902,'2022_08_10_155934_create_wishlist_project_table',1),(903,'2022_08_10_160721_create_payment_method_types_table',1),(904,'2022_08_10_160728_create_payment_methods_table',1);
+INSERT INTO `migrations` VALUES (103,'2014_10_12_000000_create_users_table',1),(104,'2014_10_12_100000_create_password_resets_table',1),(105,'2019_08_19_000000_create_failed_jobs_table',1),(106,'2019_12_14_000001_create_personal_access_tokens_table',1),(107,'2022_08_07_031420_create_bios_table',1),(108,'2022_08_07_031434_create_categories_table',1),(109,'2022_08_07_031505_create_projects_table',1),(110,'2022_08_07_031516_create_stories_table',1),(111,'2022_08_07_031534_create_updates_table',1),(112,'2022_08_07_031544_create_orders_table',1),(113,'2022_08_07_031553_create_payments_table',1),(114,'2022_08_07_031604_create_testimonials_table',1),(115,'2022_08_07_031614_create_blogs_table',1),(116,'2022_08_07_031633_create_project_comments_table',1),(117,'2022_08_07_031700_create_blog_comments_table',1),(118,'2022_08_07_031703_create_tags_table',1),(119,'2022_08_07_031729_create_project_tags_table',1),(120,'2022_08_07_031752_create_blog_tags_table',1),(121,'2022_08_07_031759_create_blog_categories_table',1),(122,'2022_08_07_062710_create_virtual_accounts_table',1),(123,'2022_08_07_062714_create_article_categories_table',1),(124,'2022_08_07_064359_create_articles_table',1),(125,'2022_08_07_064365_create_article_comments_table',1),(126,'2022_08_07_064365_create_article_tags_table',1),(127,'2022_08_10_155703_create_favourite_project_table',1),(128,'2022_08_10_155934_create_wishlist_project_table',1),(129,'2022_08_10_160721_create_payment_method_types_table',1),(130,'2022_08_10_160728_create_payment_methods_table',1),(131,'2022_08_14_160113_create_addresses_table',1),(132,'2022_08_15_114650_create_items_table',1),(133,'2022_08_15_154100_create_customer_details_table',1),(134,'2022_08_15_155030_create_transaction_inquiries_table',1),(135,'2022_08_15_155037_create_inquiry_responses_table',1),(136,'2022_08_15_170546_create_callbacks_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -708,13 +866,13 @@ DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `category_id` bigint unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_amount` bigint NOT NULL,
   `days_target` int NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
-  `is_shown` tinyint NOT NULL DEFAULT '0',
   `facebook_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `featured_picture_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -724,6 +882,7 @@ CREATE TABLE `projects` (
   `third_choice_amount` bigint NOT NULL DEFAULT '0',
   `fourth_choice_amount` bigint NOT NULL DEFAULT '0',
   `maintenance_fee` bigint NOT NULL DEFAULT '0',
+  `is_shown` tinyint NOT NULL DEFAULT '0',
   `is_favourite` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -739,7 +898,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,1,'Wakaf Mushaf Al Quran','Surakarta',200000000,60,'2022-08-01','2022-09-30',1,'','wakaf-mushaf.jpeg','wakaf-mushaf.jpeg','Divisi Sosial I-Salam memberi kesempatan untuk meraih kebaikan tanpa henti melalui wakaf Mushaf Al-Qur\'an untuk masjid, pesantren, tahfizh, TPA, dan selainnya. Lipatgandakan wakaf anda dengan terus menerus menambah donasi anda di iSalam.',100000,200000,500000,1000000,5000,1,'2022-08-13 04:52:19','2022-08-13 04:52:19');
+INSERT INTO `projects` VALUES (1,1,'Wakaf Mushaf','Wakaf Mushaf Al Quran','Surakarta',200000000,60,'2022-08-01','2022-09-30','','wakaf-mushaf.jpeg','wakaf-mushaf.jpeg','Divisi Sosial I-Salam memberi kesempatan untuk meraih kebaikan tanpa henti melalui wakaf Mushaf Al-Qur\'an untuk masjid, pesantren, tahfizh, TPA, dan selainnya. Lipatgandakan wakaf anda dengan terus menerus menambah donasi anda di iSalam.',100000,200000,500000,1000000,5000,1,1,'2022-08-19 20:49:48','2022-08-19 20:49:48');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -825,6 +984,67 @@ LOCK TABLES `testimonials` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `transaction_inquiries`
+--
+
+DROP TABLE IF EXISTS `transaction_inquiries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transaction_inquiries` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` bigint unsigned NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `merchant_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_amount` bigint NOT NULL,
+  `merchant_order_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Produk/jasa yang diperjualbelikan',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `additional_param` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_method` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `merchant_user_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username atau email pelanggan',
+  `customer_va_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nama yang muncul pada halaman konfirmasi pembayaran bank',
+  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `item_id` bigint unsigned NOT NULL,
+  `customer_detail_id` bigint unsigned NOT NULL,
+  `return_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `callback_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `signature` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiry_period` int NOT NULL COMMENT 'Masa berlaku dalam menit',
+  `account_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `on_behalf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci,
+  `transaction_fee` int NOT NULL,
+  `maintenance_fee` int NOT NULL,
+  `is_anonymous` tinyint NOT NULL DEFAULT '0',
+  `response_merchant_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_payment_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_va_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_amount` bigint DEFAULT NULL,
+  `response_status_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_status_message` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_status` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transaction_inquiries_merchant_order_id_unique` (`merchant_order_id`),
+  KEY `transaction_inquiries_item_id_foreign` (`item_id`),
+  KEY `transaction_inquiries_customer_detail_id_foreign` (`customer_detail_id`),
+  CONSTRAINT `transaction_inquiries_customer_detail_id_foreign` FOREIGN KEY (`customer_detail_id`) REFERENCES `customer_details` (`id`),
+  CONSTRAINT `transaction_inquiries_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction_inquiries`
+--
+
+LOCK TABLES `transaction_inquiries` WRITE;
+/*!40000 ALTER TABLE `transaction_inquiries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaction_inquiries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `updates`
 --
 
@@ -882,7 +1102,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Kuncara','Prasetyo','kenzie.megantara@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','WMdvADNFpO','2022-08-13 16:52:19','2022-08-13 16:52:19'),(2,'Garan','Utami','hutasoit.rini@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','PmALCFFuts','2022-08-13 16:52:19','2022-08-13 16:52:19'),(3,'Elisa','Pratama','mansur.salimah@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','vDXR0xYM2c','2022-08-13 16:52:19','2022-08-13 16:52:19'),(4,'Jatmiko','Dongoran','hpudjiastuti@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','6GAaYOtKQu','2022-08-13 16:52:19','2022-08-13 16:52:19'),(5,'Najib','Tampubolon','galak.latupono@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','Q8cGnVnNPj','2022-08-13 16:52:19','2022-08-13 16:52:19'),(6,'Luwar','Hakim','gamani.lailasari@example.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','ZrstCuZN5V','2022-08-13 16:52:19','2022-08-13 16:52:19'),(7,'Diah','Sinaga','oktaviani.viman@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XGuvMQ0zTW','2022-08-13 16:52:19','2022-08-13 16:52:19'),(8,'Halim','Wijaya','atampubolon@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','IDS4i6LBKl','2022-08-13 16:52:19','2022-08-13 16:52:19'),(9,'Silvia','Permadi','michelle23@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','K1YHAH24g9','2022-08-13 16:52:19','2022-08-13 16:52:19'),(10,'Chandra','Hartati','titi64@example.net','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','8imBcOSVlL','2022-08-13 16:52:19','2022-08-13 16:52:19'),(11,'Muhammad','Alwi','dheasetia@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','mHFVplhW9t','2022-08-13 04:52:19','2022-08-13 04:52:19'),(12,'Abdurrahman','Fawwaz','inifawaz@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','0uhdAK6ssl','2022-08-13 04:52:19','2022-08-13 04:52:19'),(13,'Eko','Prasetio','abuusamahabdurrahman@gmail.com','2022-08-13 16:52:19','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','QxwuEox6Gu','2022-08-13 04:52:19','2022-08-13 04:52:19');
+INSERT INTO `users` VALUES (1,'Cinta','Waluyo','ymayasari@example.org','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','NKh6UwKvew','2022-08-20 08:49:48','2022-08-20 08:49:48'),(2,'Dina','Mulyani','maimunah84@example.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XDtFuqRM2z','2022-08-20 08:49:48','2022-08-20 08:49:48'),(3,'Harja','Nababan','galih91@example.org','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','hGUQTuJdVm','2022-08-20 08:49:48','2022-08-20 08:49:48'),(4,'Yani','Pratiwi','gutami@example.net','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','uyUj82mn7b','2022-08-20 08:49:48','2022-08-20 08:49:48'),(5,'Balangga','Saputra','rama37@example.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','AiGNGtRb4T','2022-08-20 08:49:48','2022-08-20 08:49:48'),(6,'Suci','Anggraini','jefri28@example.org','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','mqht792avK','2022-08-20 08:49:48','2022-08-20 08:49:48'),(7,'Almira','Permata','tarihoran.ade@example.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','hWl8IslbMb','2022-08-20 08:49:48','2022-08-20 08:49:48'),(8,'Baktiadi','Usamah','bancar95@example.net','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','PZWSD3qvgL','2022-08-20 08:49:48','2022-08-20 08:49:48'),(9,'Rahmi','Suryatmi','umaya.hasanah@example.org','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','nj68Z1GUtX','2022-08-20 08:49:48','2022-08-20 08:49:48'),(10,'Warsa','Latupono','hartati.kariman@example.net','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','yD89eWOkYJ','2022-08-20 08:49:48','2022-08-20 08:49:48'),(11,'Muhammad','Alwi','dheasetia@gmail.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','mTILvuynFv','2022-08-19 20:49:48','2022-08-19 20:49:48'),(12,'Abdurrahman','Fawwaz','inifawaz@gmail.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','7oTAY25i6d','2022-08-19 20:49:48','2022-08-19 20:49:48'),(13,'Eko','Prasetio','abuusamahabdurrahman@gmail.com','2022-08-20 08:49:48','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','PpVuzq8iLp','2022-08-19 20:49:48','2022-08-19 20:49:48');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -952,4 +1172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-13 23:53:52
+-- Dump completed on 2022-08-20 15:52:55
