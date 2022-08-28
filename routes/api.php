@@ -33,6 +33,9 @@ Route::get('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryCont
 Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'index']);
 Route::get('/articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
 
+// === get payment fee ===
+Route::get('/getpaymentfee', [\App\Http\Controllers\PaymentController::class, 'get_payment_fee']);
+
 // === CALLBACK ===
 Route::post('/isalamwakafpaymentcallback', [\App\Http\Controllers\PaymentController::class, 'callback']);
 
@@ -49,12 +52,20 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::delete('/users/{id}', [\App\Http\Controllers\UserController::class, 'destroy']);
 
 
+    // ==== Project Story ====
+    Route::get('projects/{id}/story', [\App\Http\Controllers\StoryController::class, 'show']);
+    Route::post('projects/{id}/story', [\App\Http\Controllers\StoryController::class, 'store']);
+    Route::put('projects/{id}/story', [\App\Http\Controllers\StoryController::class, 'update']);
+    Route::delete('projects/{id}/story', [\App\Http\Controllers\StoryController::class, 'destroy']);
+
+
+    // ==== Project ====
     Route::post('/projects', [\App\Http\Controllers\ProjectController::class, 'store']);
     Route::put('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);
     Route::delete('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy']);
 
-    //==== ArticleCategory ====
 
+    //==== ArticleCategory ====
     Route::post('/articlecategories', [\App\Http\Controllers\ArticleCategoryController::class, 'store']);
     Route::put('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'update']);
     Route::delete('/articlecategories/{id}', [\App\Http\Controllers\ArticleCategoryController::class, 'destroy']);

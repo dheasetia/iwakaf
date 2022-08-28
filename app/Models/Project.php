@@ -18,7 +18,40 @@ class Project extends Model
 
     public function comments()
     {
-        return $this->hasMany(ArticleComment::class);
+        return $this->hasMany(ProjectComment::class);
+    }
+
+    public function story()
+    {
+        return $this->hasOne(Story::class);
+    }
+
+    public function get_backers()
+    {
+        return [
+            [
+                'name'  => 'Abah',
+                'amount'    => 300000
+            ],
+            [
+                'name'  => 'Mamah',
+                'amount'    => 500000
+            ],
+            [
+                'name'  => 'Abah',
+                'amount'    => 300000
+            ],
+            [
+                'name'  => 'Mamah',
+                'amount'    => 500000
+            ],
+        ];
+    }
+
+    public function get_project_summary()
+    {
+        $current_project_payments = Payment::where('project_id', '=', $this->is)->get();
+
     }
 
 }

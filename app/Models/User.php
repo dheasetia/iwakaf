@@ -59,4 +59,9 @@ class User extends Authenticatable
         return ucwords($full_name);
 
     }
+
+    public function comments()
+    {
+        return $this->hasMany(ProjectComment::class);
+    }
 }

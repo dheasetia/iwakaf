@@ -38,11 +38,14 @@ class ProjectDetailResource extends JsonResource
             'third_choice_amount'   => $this->third_choice_amount,
             'fourth_choice_amount'  => $this->fourth_choice_amount,
             'maintenance_fee'   => $this->maintenance_fee,
+            'created_at' => $this->created_at,
             'amount_collected'  => OnaizaDuitku::get_project_amount_collected($this->id),
+            'percentage_amount_collected' => (OnaizaDuitku::get_project_amount_collected($this->id) / $this->target_amount) * 100,
             'days_remaining'    => OnaizaDuitku::get_project_remaining_days($this->id),
             'backers'   => OnaizaDuitku::get_project_backers($this->id),
             'total_backers' => count(OnaizaDuitku::get_project_backers($this->id)),
             'story' => Story::where('project_id', '=', $this->id)->first(),
+//            'posted_at' => $this->created_at->format('Y/m/d H:i:s'),
             'updates'   => Update::where('project_id', '=', $this->id)->get(),
         ];
     }

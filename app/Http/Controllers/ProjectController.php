@@ -63,9 +63,12 @@ class ProjectController extends Controller
         $project->is_favourite = $request->is_favourite;
         $project->save();
 
+        return view('projects.show', compact('project'));
+        /* api
         return response([
             'project'   => $project
         ], 201);
+        */
     }
 
     public function update($id, ProjectUpdateRequest $request)
@@ -83,5 +86,13 @@ class ProjectController extends Controller
             'project' => $project,
             'message'   => 'Data deleted'
         ], 202);
+    }
+
+    public function donate_now($id)
+    {
+        $project = Project::find($id);
+
+        if ($project == null) return abort(404);
+        return view('projects.donate_now', $project);
     }
 }

@@ -230,6 +230,8 @@ class Duitku
         return $result;
     }
 
+
+
     /*
     public function pretend_payment($reference)
     {

@@ -205,7 +205,7 @@ return [
         /*
          * Onaiza Custom Provider
          */
-//        App\Providers\DuitkuServiceProvider::class,
+        App\Providers\DuitkuServiceProvider::class,
 
     ],
 
@@ -222,7 +222,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-//        'OnaizaDuitku' => App\Helper\OnaizaDuitku::class,
+        'OnaizaDuitku' => App\Helper\OnaizaDuitku::class,
     ])->toArray(),
 
 ];

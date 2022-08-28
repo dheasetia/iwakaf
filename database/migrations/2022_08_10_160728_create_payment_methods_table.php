@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_method_id')->constrained()->restrictOnDelete();
+            $table->foreignId('payment_method_type_id')->constrained()->restrictOnDelete();
             $table->string('code', 2)->unique();
             $table->string('display_text')->unique();
             $table->string('icon_url')->nullable();
